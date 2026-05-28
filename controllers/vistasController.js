@@ -454,7 +454,7 @@ export const generarPDF = async (req, res) => {
   doc
     .fillColor('#4d5f4c')
     .fontSize(28)
-    .text('🌸 FLOR DE LUNA', 50, 25);
+    .text('FLOR DE LUNA', 50, 25);
 
   doc
     .fillColor('#777')
@@ -543,7 +543,7 @@ export const generarPDF = async (req, res) => {
     .fillColor('#7c9b7a')
     .fontSize(28)
     .text(
-      'MUCHAS GRACIAS 💐',
+      'MUCHAS GRACIAS POR TU COMPRA',
       140,
       y,
       {
