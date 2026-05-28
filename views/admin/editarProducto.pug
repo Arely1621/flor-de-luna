@@ -1,0 +1,138 @@
+extends ../layout
+
+block contenido
+
+  .row.justify-content-center
+
+    .col-md-8
+
+      .card.shadow
+
+        .card-body
+
+          h2.text-center.mb-4
+            | Editar producto 🌸
+
+          .text-center.mb-4
+
+            img(
+              src=`/img/${producto.imagen}`
+              width="250"
+              style="border-radius:15px; object-fit:cover;"
+            )
+
+          form(
+            action=`/admin/editar-producto/${producto.id}`
+            method="POST"
+            enctype="multipart/form-data"
+          )
+
+            .mb-3
+
+              label Nombre
+
+              input.form-control(
+                type="text"
+                name="nombre"
+                value=producto.nombre
+                required
+              )
+
+            .mb-3
+
+              label Precio
+
+              input.form-control(
+                type="number"
+                step="0.01"
+                name="precio"
+                value=producto.precio
+                required
+              )
+
+            .mb-3
+
+              label Descripción
+
+              input.form-control(
+                type="text"
+                name="descripcion"
+                value=producto.descripcion
+              )
+
+            .mb-3
+
+              label Categoría
+
+              select.form-select(name="categoria")
+
+                option(
+                  value="flor"
+                  selected=producto.categoria==='flor'
+                ) Flor
+
+                option(
+                  value="ramo"
+                  selected=producto.categoria==='ramo'
+                ) Ramo
+
+            .mb-3
+
+              label Ocasión
+
+              select.form-select(name="ocasion")
+
+                option(
+                  value=""
+                  selected=!producto.ocasion
+                ) Sin ocasión
+
+                option(
+                  value="sanvalentin"
+                  selected=producto.ocasion==='sanvalentin'
+                ) San Valentín
+
+                option(
+                  value="cumple"
+                  selected=producto.ocasion==='cumple'
+                ) Cumpleaños
+
+                option(
+                  value="aniversario"
+                  selected=producto.ocasion==='aniversario'
+                ) Aniversario
+
+                option(
+                  value="madres"
+                  selected=producto.ocasion==='madres'
+                ) Día de las madres
+
+                option(
+                  value="graduacion"
+                  selected=producto.ocasion==='graduacion'
+                ) Graduación
+
+                option(
+                  value="baby"
+                  selected=producto.ocasion==='baby'
+                ) Baby Shower
+
+            .mb-4
+
+              label Cambiar imagen
+
+              input.form-control(
+                type="file"
+                name="imagen"
+                accept="image/*"
+              )
+
+            button.btn.btn-primary(
+              type="submit"
+            )
+              | Guardar cambios
+
+            a.btn.btn-secondary.ms-2(
+              href="/admin/productos"
+            )
+              | Cancelar

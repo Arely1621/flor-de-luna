@@ -1,0 +1,265 @@
+doctype html
+
+html(lang="es")
+
+  head
+
+    meta(charset="UTF-8")
+
+    meta(
+      name="viewport"
+      content="width=device-width, initial-scale=1.0"
+    )
+
+    title Flor de Luna - #{titulo}
+
+    link(
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    )
+
+    style.
+
+      body{
+        background:#f7f7f7;
+      }
+
+      .navbar-brand{
+        color:#7c9b7a !important;
+        font-weight:bold;
+      }
+
+      .btn-primary{
+        background:#7c9b7a;
+        border:none;
+      }
+
+      .btn-primary:hover{
+        background:#688666;
+      }
+
+      .factura-container{
+        background:white;
+        padding:40px;
+        border-radius:20px;
+        box-shadow:0 0 15px rgba(0,0,0,.08);
+        margin-bottom:40px;
+      }
+
+      .factura-top{
+        display:flex;
+        justify-content:space-between;
+        align-items:center;
+        margin-bottom:30px;
+      }
+
+      .logo-area h2{
+        color:#7c9b7a;
+        font-size:40px;
+        font-weight:bold;
+      }
+
+      .numero-factura{
+        background:#eaf4e5;
+        padding:20px;
+        border-radius:15px;
+        text-align:center;
+        min-width:220px;
+      }
+
+      .numero-factura h4{
+        color:#4d5f4c;
+        margin-bottom:10px;
+      }
+
+      .numero-factura p{
+        font-size:32px;
+        letter-spacing:3px;
+        margin:0;
+      }
+
+      .titulo-factura{
+        font-size:90px;
+        color:#777;
+        margin-bottom:20px;
+      }
+
+      .linea{
+        height:5px;
+        background:#cfe2cb;
+        margin-bottom:40px;
+      }
+
+      .datos-grid{
+        display:grid;
+        grid-template-columns:1fr 1fr;
+        gap:40px;
+        margin-bottom:40px;
+      }
+
+      .datos-box{
+        background:#f7fbf5;
+        padding:25px;
+        border-radius:15px;
+      }
+
+      .datos-box h3{
+        color:#5f7a5c;
+        margin-bottom:20px;
+      }
+
+      .tabla-factura{
+        width:100%;
+        border-collapse:collapse;
+        margin-top:20px;
+      }
+
+      .tabla-factura thead{
+        background:#cfe2cb;
+      }
+
+      .tabla-factura th,
+      .tabla-factura td{
+        border:1px solid #ccc;
+        padding:15px;
+        text-align:center;
+      }
+
+      .totales{
+        margin-top:30px;
+        margin-left:auto;
+        width:320px;
+        background:#eef5ed;
+        padding:25px;
+        border-radius:15px;
+      }
+
+      .totales h3{
+        color:#5f7a5c;
+        margin-top:15px;
+      }
+
+      .nota{
+        margin-top:40px;
+        background:#eef5ed;
+        padding:25px;
+        border-radius:15px;
+        min-height:150px;
+      }
+
+      .gracias{
+        text-align:center;
+        margin-top:40px;
+      }
+
+      .gracias h2{
+        display:inline-block;
+        background:#cfe2cb;
+        padding:25px 50px;
+        border-radius:20px;
+        color:#6d826b;
+        letter-spacing:3px;
+      }
+
+      .botones-factura{
+        margin-top:40px;
+        display:flex;
+        gap:15px;
+        justify-content:center;
+      }
+
+      @media(max-width:768px){
+
+        .datos-grid{
+          grid-template-columns:1fr;
+        }
+
+        .titulo-factura{
+          font-size:55px;
+        }
+
+        .factura-top{
+          flex-direction:column;
+          gap:20px;
+        }
+
+      }
+
+  body
+
+    nav.navbar.navbar-expand-lg.bg-white.shadow-sm.mb-4
+
+      .container
+
+        a.navbar-brand(href="/")
+          | 🌸 Flor de Luna
+
+        button.navbar-toggler(
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#menu"
+        )
+
+          span.navbar-toggler-icon
+
+        .collapse.navbar-collapse#menu
+
+          ul.navbar-nav.ms-auto
+
+            li.nav-item
+              a.nav-link(href="/")
+                | Inicio
+
+            li.nav-item
+              a.nav-link(href="/catalogo")
+                | Catálogo
+
+            li.nav-item
+              a.nav-link(href="/ocasiones")
+                | Ocasiones
+
+            li.nav-item
+              a.nav-link(href="/carrito")
+                | 🛒 Carrito
+            
+            li.nav-item
+              a.nav-link(href="/perfil")
+                | Mi perfil
+
+            if usuario
+
+              if usuario.tipousuario === 'Admin'
+
+                li.nav-item
+                  a.nav-link(
+                    href="/admin/productos"
+                  )
+                    | Agregar Producto
+
+              li.nav-item
+                a.nav-link(
+                  href="/logout"
+                )
+                  | Cerrar sesión
+
+            else
+
+              li.nav-item
+                a.nav-link(
+                  href="/login"
+                )
+                  | Iniciar sesión
+
+              li.nav-item
+                a.nav-link(
+                  href="/registro"
+                )
+                  | Registro
+
+    .container
+
+      block contenido
+
+    script(
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+    )

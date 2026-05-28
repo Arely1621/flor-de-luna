@@ -1,0 +1,95 @@
+body{
+  background:#fff7fb;
+}
+
+/* FACTURA */
+
+.factura-container{
+  background:white;
+  padding:40px;
+  border-radius:20px;
+  box-shadow:0 0 20px rgba(0,0,0,.1);
+}
+
+.top-factura{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.logo-factura{
+  color:#d63384;
+  font-size:40px;
+  font-weight:bold;
+}
+
+.numero-factura{
+  background:#ffd6e7;
+  padding:20px;
+  border-radius:15px;
+  text-align:center;
+}
+
+.fecha-factura{
+  background:#ffe5ef;
+  padding:10px;
+  border-radius:10px;
+  width:250px;
+}
+
+.factura-table thead{
+  background:#ffc2d9;
+}
+
+.factura-table th{
+  color:#7a294f;
+}
+
+.factura-total{
+  text-align:right;
+  margin-top:30px;
+}
+
+.gracias-factura{
+  text-align:center;
+  margin-top:40px;
+  color:#d63384;
+}
+
+/* CARDS */
+
+.card{
+  border:none;
+  border-radius:20px;
+}
+
+/* BOTONES */
+
+.btn-primary{
+  background:#d63384;
+  border:none;
+}
+
+.btn-primary:hover{
+  background:#bb2d72;
+}
+
+.btn-success{
+  background:#ff5ca8;
+  border:none;
+}
+
+.btn-success:hover{
+  background:#e64993;
+}
+
+/* NAVBAR */
+
+.navbar{
+  background:white !important;
+}
+
+.navbar-brand{
+  color:#d63384 !important;
+  font-weight:bold;
+}

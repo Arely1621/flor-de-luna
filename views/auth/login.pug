@@ -1,0 +1,39 @@
+extends ../layout
+
+block contenido
+
+  .row.justify-content-center
+
+    .col-md-5
+
+      .card.shadow
+
+        .card-body.p-4
+
+          h2.text-center.text-danger.mb-4
+            | Iniciar sesión
+
+          if mensaje
+            .alert.alert-danger= mensaje
+
+          form(action="/login" method="POST")
+
+            .mb-3
+              label Email
+              input.form-control(
+                type="email"
+                name="email"
+                required
+              )
+
+            .mb-3
+              label Contraseña
+              input.form-control(
+                type="password"
+                name="pass"
+                required
+              )
+
+            button.btn.btn-primary.w-100(
+              type="submit"
+            ) Entrar

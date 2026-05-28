@@ -1,0 +1,100 @@
+extends ../layout
+
+block contenido
+
+  .row.justify-content-center
+
+    .col-md-5
+
+      .card.shadow
+
+        .card-body.p-4
+
+          h2.text-center.text-danger.mb-4
+            | Crear cuenta
+
+          if mensaje
+
+            .alert.alert-success
+              = mensaje
+
+          form(
+            action="/registro"
+            method="POST"
+          )
+
+            .mb-3
+
+              label Nombre
+
+              input.form-control(
+                type="text"
+                name="nombre"
+                required
+              )
+
+            .mb-3
+
+              label Email
+
+              input.form-control(
+                type="email"
+                name="email"
+                required
+              )
+
+            .mb-3
+
+              label Teléfono
+
+              input.form-control(
+                type="text"
+                name="telefono"
+              )
+
+            .mb-3
+
+              label Dirección
+
+              input.form-control(
+                type="text"
+                name="direccion"
+              )
+
+            .mb-3
+
+              label Ciudad
+
+              input.form-control(
+                type="text"
+                name="ciudad"
+              )
+
+            .mb-3
+
+              label Código Postal
+
+              input.form-control(
+                type="text"
+                name="codigoPostal"
+              )
+
+            .mb-3
+
+              label Contraseña
+
+              input.form-control(
+                type="password"
+                name="pass"
+                required
+              )
+
+            button.btn.btn-primary.w-100(
+              type="submit"
+            )
+              | Registrarse
+
+          p.text-center.mt-3
+
+            a(href="/login")
+              | ¿Ya tienes cuenta? Inicia sesión

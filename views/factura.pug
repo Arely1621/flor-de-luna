@@ -1,0 +1,95 @@
+extends layout
+
+block contenido
+
+  .factura-container
+
+    .factura-top
+
+      .logo-area
+        h2 🌸 Flor de Luna
+
+      .numero-factura
+        h4 FACTURA NÚMERO
+        p 000#{Math.floor(Math.random()*9999)}
+
+    h1.titulo-factura FACTURA
+
+    .linea
+
+    .datos-grid
+
+      .datos-box
+        h3 DATOS DEL CLIENTE
+
+        p
+          b Cliente:
+          |  #{usuario ? usuario.nombre : 'Cliente'}
+
+        p
+          b Correo:
+          |  #{usuario ? usuario.email : 'correo@email.com'}
+
+        p
+          b Fecha:
+          |  #{new Date().toLocaleDateString()}
+
+      .datos-box
+        h3 FLOR DE LUNA
+
+        p 📍 Uruapan, Michoacán
+        p 📞 4521719252
+        p ✉️ flordeluna@gmail.com
+
+    table.tabla-factura
+
+      thead
+        tr
+          th Descripción
+          th Cantidad
+          th Precio
+          th Total
+
+      tbody
+
+        each item in items
+
+          tr
+            td= item.producto.nombre
+            td= item.cantidad
+            td $#{item.producto.precio}
+            td $#{item.producto.precio * item.cantidad}
+
+    .totales
+
+      p
+        b Subtotal:
+        |  $#{subtotal.toFixed(2)}
+
+      p
+        b IVA:
+        |  $#{iva.toFixed(2)}
+
+      h3
+        b Total:
+        |  $#{total.toFixed(2)}
+
+    .nota
+      p
+        b Nota:
+      p Gracias por comprar en Flor de Luna 🌸
+
+    .gracias
+      h2 MUCHAS GRACIAS 💐
+
+    .botones-factura
+
+      a.btn.btn-success(
+        href="/factura/pdf"
+      )
+        | Descargar PDF
+
+      a.btn.btn-secondary(
+        href="/catalogo"
+      )
+        | Regresar al catálogo

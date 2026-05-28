@@ -1,0 +1,57 @@
+extends layout
+
+block contenido
+
+  .container.mt-5
+
+    .row.justify-content-center
+
+      .col-md-7
+
+        .card.shadow
+
+          .card-body
+
+            h1.text-center.mb-5
+              | Mi perfil 🌸
+
+            p
+              b Nombre:
+              |  #{usuario.nombre}
+
+            br
+
+            p
+              b Correo:
+              |  #{usuario.email}
+
+            br
+
+            p
+              b Teléfono:
+              |  #{usuario.telefono || ''}
+
+            br
+
+            p
+              b Dirección:
+              |  #{usuario.direccion || ''}
+
+            br
+
+            p
+              b Ciudad:
+              |  #{usuario.ciudad || ''}
+
+            br
+
+            p
+              b Código Postal:
+              |  #{usuario.codigoPostal || ''}
+
+            br
+
+            a.btn.btn-warning(
+              href="/perfil/editar"
+            )
+              | ✏️ Editar perfil

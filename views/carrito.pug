@@ -1,0 +1,102 @@
+extends layout
+
+block contenido
+
+  h2.text-center.mb-4
+    | 🛒 Mi carrito
+
+  if items.length === 0
+
+    .alert.alert-info.text-center
+      | Tu carrito está vacío
+
+  else
+
+    table.table.table-bordered.align-middle
+
+      thead
+
+        tr
+          th Imagen
+          th Producto
+          th Cantidad
+          th Precio
+          th Subtotal
+          th
+
+      tbody
+
+        - let total = 0
+
+        each item in items
+
+          - let subtotal = item.producto.precio * item.cantidad
+          - total += subtotal
+
+          tr
+
+            td
+
+              img(
+                src=`/img/${item.producto.imagen}`
+                width="80"
+                style="border-radius:10px"
+              )
+
+            td
+              = item.producto.nombre
+
+            td
+
+              .d-flex.align-items-center.gap-2
+
+                form(
+                  action=`/restar/${item.id}`
+                  method="POST"
+                )
+
+                  button.btn.btn-warning.btn-sm(
+                    type="submit"
+                  )
+                    | -
+
+                span
+                  = item.cantidad
+
+                form(
+                  action=`/sumar/${item.id}`
+                  method="POST"
+                )
+
+                  button.btn.btn-success.btn-sm(
+                    type="submit"
+                  )
+                    | +
+
+            td
+              | $#{item.producto.precio}
+
+            td
+              | $#{subtotal}
+
+            td
+
+              a.btn.btn-danger.btn-sm(
+                href=`/eliminar-carrito/${item.id}`
+              )
+                | Eliminar
+
+    .text-end.mt-4
+
+      h3
+        | Total: $#{total}
+
+      form(
+        action="/factura"
+        method="POST"
+      )
+
+        button.btn.btn-success.btn-lg.mt-2(
+          type="submit"
+        )
+          | Comprar ahora

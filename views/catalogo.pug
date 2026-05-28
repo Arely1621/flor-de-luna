@@ -1,0 +1,44 @@
+extends layout
+
+block contenido
+
+  h2.text-center.mb-4
+    | 🌸 #{titulo}
+
+  a.btn.btn-outline-dark.mb-4(href="/carrito")
+    | 🛒 Ver carrito
+
+  .row
+
+    each p in productos
+
+      .col-md-3.mb-4
+
+        .card.shadow.h-100
+
+          img.card-img-top(
+            src=`/img/${p.imagen}`
+            style="height:250px; object-fit:cover"
+          )
+
+          .card-body
+
+            h5.card-title= p.nombre
+
+            p.card-text= p.descripcion
+
+            h4.text-danger
+              | $#{p.precio}
+
+            form(action="/agregar-carrito" method="POST")
+
+              input(
+                type="hidden"
+                name="productoId"
+                value=p.id
+              )
+
+              button.btn.btn-success.w-100(
+                type="submit"
+              )
+                | Agregar al carrito
