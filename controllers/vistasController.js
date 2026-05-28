@@ -543,7 +543,7 @@ export const generarPDF = async (req, res) => {
     .fillColor('#7c9b7a')
     .fontSize(28)
     .text(
-      'MUCHAS GRACIAS POR TU COMPRA',
+      'MUCHAS GRACIAS ',
       140,
       y,
       {
