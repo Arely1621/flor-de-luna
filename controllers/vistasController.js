@@ -369,6 +369,8 @@ export const generarFactura = async (req, res) => {
   // 3. Guardar la compra
   const compra = await Compra.create({
     usuarioId: req.usuario.id,
+    subtotal,
+    iva,
     total: total,
     fecha: new Date()
   });
@@ -405,44 +407,46 @@ export const generarFactura = async (req, res) => {
 
 export const generarPDF = async (req, res) => {
 
-  const items = await Carrito.findAll({
+  // Obtener última compra del usuario
+  const compra = await Compra.findOne({
     where: {
       usuarioId: req.usuario.id
     },
+    order: [['createdAt', 'DESC']]
+  });
+
+  if (!compra) {
+    return res.send('No existe ninguna compra');
+  }
+
+  // Obtener detalles de la compra
+  const detalles = await DetalleCompra.findAll({
+    where: {
+      compraId: compra.id
+    },
     include: [{
-      model: Producto,
-      as: 'producto'
+      model: Producto
     }]
   });
 
-  let subtotal = 0;
+  // Obtener usuario completo
+  const usuario = await Usuario.findByPk(req.usuario.id);
 
-  items.forEach(item => {
+  const subtotal = compra.total / 1.16;
+  const iva = compra.total - subtotal;
+  const total = compra.total;
 
-    subtotal +=
-      item.producto.precio *
-      item.cantidad;
-
-  });
-
-  const iva = subtotal * 0.16;
-
-  const total = subtotal + iva;
-
-  const ruta =
-    `./public/factura_${Date.now()}.pdf`;
+  const ruta = `./public/factura_${Date.now()}.pdf`;
 
   const doc = new PDFDocument({
     margin: 40
   });
 
-  const stream =
-    fs.createWriteStream(ruta);
+  const stream = fs.createWriteStream(ruta);
 
   doc.pipe(stream);
 
   // HEADER
-
   doc
     .rect(0, 0, 700, 80)
     .fill('#d9ead3');
@@ -460,14 +464,9 @@ export const generarPDF = async (req, res) => {
   doc
     .fillColor('#000')
     .fontSize(16)
-    .text(
-      `Factura #: ${Math.floor(Math.random()*9999)}`,
-      400,
-      140
-    );
+    .text(`Factura #: ${compra.id}`, 400, 140);
 
-  // DATOS
-
+  // DATOS CLIENTE
   doc
     .fontSize(18)
     .fillColor('#4d5f4c')
@@ -476,13 +475,15 @@ export const generarPDF = async (req, res) => {
   doc
     .fillColor('#000')
     .fontSize(13)
-    .text(`Cliente: ${req.usuario.nombre}`, 50, 260)
-    .text(`Correo: ${req.usuario.email}`, 50, 280)
-    .text(`Fecha: ${new Date().toLocaleDateString()}`, 50, 300);
+    .text(`Cliente: ${usuario.nombre}`, 50, 260)
+    .text(`Correo: ${usuario.email}`, 50, 280)
+    .text(`Telefono: ${usuario.telefono || ''}`, 50, 300)
+    .text(`Direccion: ${usuario.direccion || ''}`, 50, 320)
+    .text(`Ciudad: ${usuario.ciudad || ''}`, 50, 340)
+    .text(`CP: ${usuario.codigoPostal || ''}`, 50, 360);
 
   // TABLA
-
-  let y = 380;
+  let y = 420;
 
   doc
     .rect(50, y, 500, 30)
@@ -498,11 +499,10 @@ export const generarPDF = async (req, res) => {
 
   y += 40;
 
-  items.forEach(item => {
+  detalles.forEach(item => {
 
     const totalProducto =
-      item.producto.precio *
-      item.cantidad;
+      item.precio * item.cantidad;
 
     doc
       .rect(50, y - 5, 500, 30)
@@ -511,7 +511,7 @@ export const generarPDF = async (req, res) => {
     doc
       .text(item.producto.nombre, 60, y)
       .text(item.cantidad.toString(), 260, y)
-      .text(`$${item.producto.precio}`, 330, y)
+      .text(`$${item.precio}`, 330, y)
       .text(`$${totalProducto}`, 450, y);
 
     y += 35;
@@ -519,7 +519,6 @@ export const generarPDF = async (req, res) => {
   });
 
   // TOTALES
-
   y += 30;
 
   doc
@@ -537,8 +536,7 @@ export const generarPDF = async (req, res) => {
     .fillColor('#4d5f4c')
     .text(`Total: $${total.toFixed(2)}`, 340, y + 70);
 
-  // GRACIAS
-
+  // MENSAJE
   y += 170;
 
   doc
@@ -562,6 +560,7 @@ export const generarPDF = async (req, res) => {
   });
 
 };
+
 
 
 // ==================== ADMIN ====================
